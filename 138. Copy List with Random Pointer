@@ -1,0 +1,46 @@
+# Time: O(n)
+# Space: O(n)
+# 本题思路：1.创建新的linkedlist: 1->1->2->2->3->3->4->4 （在原链表的每个节点后面都插入一个新节点，新节点的内容和前面的节点一样。比如上图，1后面插入1，2后面插入2，依次类推。）
+#         2. 映射random pointer的对象： tmp.next.random = tmp.random.next
+#         3. 分离pNew and pOld，细节：newHead代表last final linkedlist，pNew来iterate
+#         4. pOld.next =None 防止原来的head list被修改
+
+
+# Definition for singly-linked list with a random pointer.
+# class RandomListNode(object):
+#     def __init__(self, x):
+#         self.label = x
+#         self.next = None
+#         self.random = None
+
+class Solution(object):
+    def copyRandomList(self, head):
+        """
+        :type head: RandomListNode
+        :rtype: RandomListNode
+        """
+        if head == None:
+            return None
+        tmp = head
+        while tmp:
+            newNode = RandomListNode(tmp.label)
+            newNode.next = tmp.next
+            tmp.next = newNode
+            tmp = tmp.next.next
+        
+        tmp = head
+        while tmp:
+            if tmp.random:
+                tmp.next.random = tmp.random.next
+            tmp = tmp.next.next
+        newHead = head.next
+        pNew = newHead
+        pOld = head
+        while pNew.next:
+            pOld.next = pNew.next
+            pOld = pOld.next
+            pNew.next = pOld.next
+            pNew = pNew.next
+        pOld.next =None
+        pNew.next =None
+        return newHead
