@@ -1,0 +1,22 @@
+#Time: O(depth of the tree)
+#Space: O(1)
+#考点：preorder
+#本题思路：1.做tree的题目需要注意退出recursion退出的条件 2.思考recursion的时候 root.left和root.right进入maxDepth要忘记原来的root，只关注left和right的值，退出条件的值返回到recursion的语句
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root:
+            return 0
+        
+        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
