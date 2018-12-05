@@ -1,0 +1,29 @@
+#Time: O(n)
+#Space: O(1)
+
+#考点：fast and slow 指针；注意当linkedlist为空，1个，或者2个数字时的情况，fast指针容易为None导致crash，所以判断语句用while fast and fast.next
+
+
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if not head or not head.next: return False
+        slow = head
+        fast = head.next
+        while fast and fast.next:
+            if slow.val != fast.val:
+                slow = slow.next
+                fast = fast.next.next
+            else:
+                return True
+        return False
