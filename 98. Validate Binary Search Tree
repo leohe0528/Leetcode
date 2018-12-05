@@ -1,0 +1,33 @@
+#Time: O(N)
+#Space: O(N)
+#考点：preorder，BST的理解：必须 left < root < right 每个subtree都要满足！！！
+#本题思路：对于left的subtree,利用min = -inf and left的值一直小于“max”, “max”在左边是每个root的value，因为每个左边的值必须都小于自己的subroot和别的上面的root；同理右边，max = inf and right的值一直要大于“min”，“min”是右边每个root的value
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        
+        return self.isValid(root, float('-inf'), float('inf'))
+    
+    def isValid(self, root, _min, _max):
+        if not root:
+            return True
+        if root.val <= _min:
+            return False
+        if root.val >= _max:
+            return False
+
+        left = self.isValid(root.left, _min, root.val)
+        right = self.isValid(root.right, root.val, _max)
+        return left and right
+        
