@@ -1,0 +1,23 @@
+#Time: O(NlogN)
+#Space: O(N)
+#考点
+
+
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        if len(lists) == 0 : return None
+        ls =[]
+        for oneList in lists:
+            while oneList:
+                ls.append(oneList.val)
+                oneList = oneList.next
+        ls.sort()
+        head = dumphead = ListNode(None)
+        for one in ls:
+            head.next = ListNode(one)
+            head = head.next
+        return dumphead.next
