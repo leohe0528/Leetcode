@@ -1,0 +1,20 @@
+#Time: O(n)
+#Space: O(n)
+#考点：stack
+#本题思路：1. 利用逆向思维，见到 (, {, [ 然后保存), }, ]，接着通过pop出来的是否一样来判定对错
+          2. 要注意stack一开始为不为空
+
+class Solution:
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        stack = []
+        
+        for i in range(len(s)):
+            if s[i] is '(': stack.append(')')
+            elif s[i] is '[': stack.append(']')
+            elif s[i] is '{': stack.append('}')
+            elif stack == [] or stack.pop() != s[i]: return False #stack == [] 防止“]”这种情况发生，即stack一开始为空 但是却要                                                                             stack.pop()
+        return stack == []
