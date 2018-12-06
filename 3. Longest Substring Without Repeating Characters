@@ -1,0 +1,21 @@
+#Time: O(n)
+#Space: O(n)
+#考点：two pointer，dict
+#本题思路：dictionary来储存s里元素的location，利用一个pointer来iterate s里面的元素 直到usedChar含有元素且start <= usedChar[s[i]]，更新start的location；否则 更新maxlength，最后记录unique元素的位置
+#注意： start <= usedChar[s[i]] ： 例子："tmmzuxt"，如果没有start <= usedChar[s[i]]，第二个t会被忽略 从而导致maxlength少了一个。原因是第二个m出现的时候，start被更新到第二个m的location，导致第一个t是被忽略的
+
+class Solution(object):
+
+    def lengthOfLongestSubstring(self, s):
+        start = maxLength = 0
+        usedChar = {}
+        
+        for i in range(len(s)):
+            if s[i] in usedChar and start <= usedChar[s[i]]:
+                start = usedChar[s[i]] + 1
+            else:
+                maxLength = max(maxLength, i - start + 1)
+
+            usedChar[s[i]] = i
+
+        return maxLength 
