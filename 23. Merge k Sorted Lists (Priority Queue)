@@ -1,0 +1,25 @@
+#Time: O(NlogN)
+#Space: O(k*n)
+#考点：priority queue
+#本题思路：1.记录每个list里的第一个元素，因为题目说已经是sorted list，所以记录的必然是每个list的最小元素
+          2. 用heapq.heapify来构建priority queue， 这个需要O(NlogN)
+          3. 接着pop每个heap里面的第一个元素，也就是最小元素，然后如果这个list has next，就把这个元素的下一个push到heap里面，由于heap的机制，新加入的元素会自动排序
+          4. 每次pop一个元素，创建一个新的linkedlist来连接即可
+
+class Solution(object):
+    def mergeKLists(self, lists):
+
+        heap = []
+        for l in lists:
+            if l: heap.append((l.val, l))
+        heapq.heapify(heap)
+        dummy = ListNode(0)
+        head = dummy
+        
+        while heap:
+            _, h = heapq.heappop(heap)
+            head.next = h
+            head = head.next
+            if h.next:
+                heapq.heappush(heap, (h.next.val, h.next))
+        return dummy.next
