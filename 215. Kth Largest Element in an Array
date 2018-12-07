@@ -1,0 +1,19 @@
+#Time: O(nlog(k))
+#Space: O(k)
+#考点：minheap
+#本题思路：保证heap里面只有k个elements，然后iterate nums，num大于heap当前最小值，则pop出来，被num替换掉，直到nums被iterate完，minheap的最小值则是kth largest element
+
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        heap = [float('-inf')] * k
+        heapq.heapify(heap)
+        for num in nums:
+            if num > heap[0]:
+                heapq.heappop(heap)
+                heapq.heappush(heap, num)
+        return heap[0]
