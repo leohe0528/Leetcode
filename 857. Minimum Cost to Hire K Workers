@@ -1,0 +1,29 @@
+#本题思路：individual wage/individual quality * sum quality = sum wage；也就是说 在满足k个worker的时候 sum quality越小 sum wage越小，注意在已选择的k个worker里选择 individual wage/quality最大的那个，因为才能保证满足2
+#Time Complexity: O(NlogN), where N is the number of workers.
+
+#Space Complexity: O(N)
+
+class Solution(object):
+    def mincostToHireWorkers(self, quality, wage, K):
+        """
+        :type quality: List[int]
+        :type wage: List[int]
+        :type K: int
+        :rtype: float
+        """
+
+        workers = sorted([float(wage[i])/quality[i], quality[i]] for i in range(len(quality)))
+
+        qsum = 0
+        res = float('inf')
+        heap = []
+        for i in range(len(workers)):
+            r, q = workers[i]
+            
+            heapq.heappush(heap, -q)
+            qsum += q
+            if len(heap) > K:
+                qsum += heapq.heappop(heap)
+            if len(heap) == K:
+                res = min(res, r * qsum)
+        return res
