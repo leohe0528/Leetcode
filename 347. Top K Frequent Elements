@@ -1,0 +1,22 @@
+#Time: O(nlogk) k is the number of unique elements
+#Space: O(k)
+#本题思路：1.用dic记录element以及出现的次数
+          2. 对出现的次数排序 同时记录对应的element
+          3. 提取前top k frequent element
+
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        dic = {}
+        heap, res = [], []
+        for num in nums:
+            dic[num] = dic[num] + 1 if num in dic else 1
+        for key in dic:
+            heapq.heappush(heap, (-dic[key], key))
+        for i in range(k):
+            res.append(heapq.heappop(heap)[1])
+        return res
