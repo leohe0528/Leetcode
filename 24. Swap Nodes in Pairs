@@ -1,0 +1,30 @@
+#本题思路：例子1->2->n; dummy来保存list，node.next连接temp2(2->n)的node变成0->2->n，temp1.next接temp2.next变成1->n;temp2.next接temp1变成0->2->1->n
+
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def swapPairs(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head or not head.next:
+            return head
+        dummy = ListNode(0)
+        dummy.next = head
+        node = dummy
+        while node.next and node.next.next:
+            temp1 = node.next.
+            temp2 = node.next.next
+            node.next = temp2
+            temp1.next = temp2.next
+            temp2.next = temp1
+            node = node.next.next
+        return dummy.next
+        
+        
