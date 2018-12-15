@@ -1,0 +1,17 @@
+#Time: O(N^2)
+#Space: O(N)
+#本题思路： 考察split and "".join的使用
+class Solution(object):
+    def numUniqueEmails(self, emails):
+        """
+        :type emails: List[str]
+        :rtype: int
+        """
+        res = set()
+        for email in emails:
+            local, domain = email.split("@")
+            if "+" in local:
+                local = local[:local.index("+")]
+            local = "".join(local.split("."))
+            res.add(local + "@" + domain)
+        return len(res)
