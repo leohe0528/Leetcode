@@ -1,6 +1,6 @@
 #Time: O(m*n^2)
 #Space: O(3^n)
-#本题思路：暴力解法
+#本题思路：暴力解法, 假设“23”，把2对应的字母存进去res: ["a", "b", "c"], 然后后两个for loop把3对应的三个字母，分别塞进a,b,c里面，第一次循环会得到ad,bd,cd
 class Solution(object):    
     def letterCombinations(self, digits):
         """
