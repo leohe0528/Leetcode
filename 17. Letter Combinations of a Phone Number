@@ -1,4 +1,6 @@
 #Time: O(m*n^2)
+#Space: O(3^n)
+#本题思路：暴力解法
 class Solution(object):    
     def letterCombinations(self, digits):
         """
