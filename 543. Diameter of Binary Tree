@@ -1,0 +1,20 @@
+#Time: O(N)
+#Space: O(1)
+
+
+class Solution(object):
+
+    def diameterOfBinaryTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        
+        self.ans = 0 
+        self.depth(root)
+        return self.ans
+    def depth(self, p):
+        if not p: return 0
+        left, right = self.depth(p.left), self.depth(p.right)
+        self.ans = max(self.ans, left+right)
+        return 1 + max(left, right)
