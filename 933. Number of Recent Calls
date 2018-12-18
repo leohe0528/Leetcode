@@ -1,0 +1,17 @@
+#Time: O(N)
+#Space: O(N)
+#本题思路：这个方法使用一个队列，当t时间到达之后，在t-3000之前的调用全部删除，因为这些不会对后面的产生任何影响了。删除之后，求长度就好了。
+class RecentCounter(object):
+
+    def __init__(self):
+        self.queue = collections.deque()
+
+    def ping(self, t):
+        """
+        :type t: int
+        :rtype: int
+        """
+        while self.queue and self.queue[0] < t - 3000:
+            self.queue.popleft()
+        self.queue.append(t)
+        return len(self.queue)
