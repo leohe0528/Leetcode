@@ -1,0 +1,32 @@
+#联想法：联想到 Binary Tree Preorder Traversal
+#本题思路：记录root.val，然后对root的children进行recursive，注意！是对每一个chil进行recursive
+#实际方案：1.当root为None，则返回上级
+          2. 然后记录当前node
+          3. 用一个for loop来遍历每个child，最后recursive
+#数据结构：DFS+queue（array）
+#复杂度 Time: O(N) and Space: O(N)
+
+
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val, children):
+        self.val = val
+        self.children = children
+"""
+class Solution(object):
+    def preorder(self, root):
+        """
+        :type root: Node
+        :rtype: List[int]
+        """
+        self.res = []
+        self.helper(root)
+        return self.res
+        
+    def helper(self, root):
+        if not root:
+            return
+        self.res.append(root.val)
+        for child in root.children:
+            self.helper(child)
