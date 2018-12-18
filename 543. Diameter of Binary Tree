@@ -1,7 +1,7 @@
 #Time: O(N)
 #Space: O(1)
 
-
+#本题思路：和maximum depth of a tree 类似，只要记录left+right的和即可
 class Solution(object):
 
     def diameterOfBinaryTree(self, root):
