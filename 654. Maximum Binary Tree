@@ -1,0 +1,36 @@
+#本题思路： 1. 找到nums里面的最大值的index -> findMax
+          2. 当前maxIndex对应的值 则为root 
+          3. ！！！左右两边的node 利用了divide and conquer的思想来构建，所以是recursion，同时输入nums新的start和end
+          4. 涉及到recursion，要思考退出条件，在这则是start > end
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def constructMaximumBinaryTree(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: TreeNode
+        """
+        return self.construction(nums, 0, len(nums)-1)
+        
+    def findMax(self, nums, start, end):
+        _max, maxIndex = nums[start], start
+        for i in range(start, end+1):
+            if nums[i] > _max:
+                _max = nums[i]
+                maxIndex = i
+        return maxIndex
+    
+    def construction(self, nums, start, end):
+        if start > end:
+            return None
+        maxIndex = self.findMax(nums, start, end)
+        root = TreeNode(nums[maxIndex])
+        root.left = self.construction(nums, start, maxIndex - 1)
+        root.right = self.construction(nums, maxIndex+1, end)
+        return root
+        
