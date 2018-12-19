@@ -1,0 +1,37 @@
+#本题思路：与search binary tree类似，只要在最后的node里进行判断left/right是否为空，为空则添加，否则继续遍历
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def insertIntoBST(self, root, val):
+        """
+        :type root: TreeNode
+        :type val: int
+        :rtype: TreeNode
+        """
+        if not root:
+            root = TreeNode(val)
+            return root
+        self.helper(root, val)
+        return root
+        
+    def helper(self, root, val):
+        
+        
+        if root.val > val:
+            if not root.left:
+                root.left = TreeNode(val)
+                return
+            else:
+                self.helper(root.left, val)
+        elif root.val < val:
+            if not root.right:
+                root.right = TreeNode(val)
+                return
+            else:
+                self.helper(root.right, val)
