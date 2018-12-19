@@ -1,0 +1,27 @@
+#本题思路：用postorder traversal遍历，因为得先保证root的left和right均为none 这样当前root若为0 则可以去掉
+#注意！！！“为什么要return root，为什么要root.left和root.right?" ans: 如果没有root.left和root.right来承接return的root，每次recursion的root是另外单独的memory，需要return的时候有上级root来连接。简单来说，1.最后结果return是root 2.每个recursion需要承接（或者想想如果没有root.left/root.right 当前recursion return出来的东西能否给到上级root的left/right)
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def pruneTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        ans = self.helper(root)
+        return ans
+    
+    def helper(self, root):
+        if not root:
+            return root
+        root.left = self.helper(root.left)
+        root.right = self.helper(root.right)
+        if root.val == 0 and not root.left and not root.right:
+            root = None
+        return root
