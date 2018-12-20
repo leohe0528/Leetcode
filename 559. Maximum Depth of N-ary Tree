@@ -1,0 +1,36 @@
+# 1.append()  向列表尾部追加一个新元素，列表只占一个索引位，在原有列表上增加 [1,2,3,[4,5,6]]
+# 2.extend() 向列表尾部追加一个列表，将列表中的每个元素都追加进来，在原有列表上增加 [1,2,3,4,5,6]
+# 3.+  直接用+号看上去与用extend()一样的效果，但是实际上是生成了一个新的列表存这两个列表的和，只能用在两个列表相加上  [1,2,3,4,5,6]
+# 4.+= 效果与extend()一样，向原列表追加一个新元素，在原有列表上增加 [1,2,3,4,5,6]
+
+#本题思路： 用BFS+stack（DFS）来解答，把每层的node加入到stack，然后maxDep就+=1，接着创建一个newStack，遍历添加每个node的leaf node，然stack = newStack即可
+
+#BFS
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: Node
+        :rtype: int
+        """
+        if not root:
+            return 0
+        
+        stack = [root]
+        maxDep = 0
+        while stack:
+            newStack = []
+            for node in stack:
+                newStack += node.children
+            maxDep += 1
+            stack = newStack
+        return maxDep
+#DFS        
+#         return self.helper(root)
+        
+#     def helper(self, root):
+#         if not root:
+#             return 0
+#         maxDep = 0
+#         for child in root.children:
+#             maxDep = max(maxDep, self.helper(child))
+#         return maxDep + 1
