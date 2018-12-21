@@ -1,3 +1,6 @@
+#本题思路：动态规划
+# 1. 怎样达到最优解？ -> 用dp记录每步最优解，然后找最大值
+# 2. 最优解子结构？ -> num[i]本身要是比nums[i]+dp[i-1]，我就没有必要让它们相加，而是当前dp[i] = nums[i]
 class Solution(object):
     def maxSubArray(self, nums):
         """
