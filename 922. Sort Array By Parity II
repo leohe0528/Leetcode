@@ -1,0 +1,20 @@
+#本题思路：因为属于easy，用space为O(1)， 两个指针，一个指misplace的even 另一个指着misplace的odd，若正常+=2；注意是否out of index
+
+class Solution(object):
+    def sortArrayByParityII(self, A):
+        """
+        :type A: List[int]
+        :rtype: List[int]
+        """
+        
+        left = 0
+        right = len(A) - 1
+        
+        while left < len(A) and right >= 0:
+            while left < len(A) and A[left] % 2 == 0:
+                left += 2
+            while right >= 0 and A[right] % 2 != 0:
+                right -= 2
+            if left < len(A) and right >= 0:
+                A[left], A[right] = A[right], A[left]
+        return A
