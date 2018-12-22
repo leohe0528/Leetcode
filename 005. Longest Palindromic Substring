@@ -6,12 +6,12 @@ class Solution(object):
     def longestPalindrome(self, s):
         palindrome = ''
         for i in range(len(s)):
-            len1 = len(self.getPalindrome(s, i, i))
-            if len1 > len(palindrome):
-                palindrome = self.getPalindrome(s, i, i)
-            len2 = len(self.getPalindrome(s, i, i+1))
-            if len2 > len(palindrome):
-                palindrome = self.getPalindrome(s, i, i+1)
+            temp = self.getPalindrome(s, i, i)
+            if len(temp) > len(palindrome):
+                palindrome = temp
+            temp = self.getPalindrome(s, i, i+1)
+            if len(temp) > len(palindrome):
+                palindrome = temp
         return palindrome
     
     def getPalindrome(self, s, l, r):
