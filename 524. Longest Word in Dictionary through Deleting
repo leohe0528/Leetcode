@@ -1,0 +1,21 @@
+#本题思路： 
+1、对dictionary进行sort a、长度（高到低） b、字母（a到z) python 默认是 长度低到高，a到z
+2. 用一个指针指向s的每个char，如果满足 word[i] == c, i+=1，也就是说只有char 按顺序的对应word的每个char i才增加1
+3. 当i的长度等于word的长度，则是答案
+class Solution(object):
+    def findLongestWord(self, s, d):
+        """
+        :type s: str
+        :type d: List[str]
+        :rtype: str
+        """
+        d.sort(key = lambda x: (-len(x), x[0]))
+        
+        for word in d:
+            i = 0
+            for c in s:
+                if i < len(word) and word[i] == c:
+                    i += 1
+            if i == len(word):
+                return word
+        return ""
