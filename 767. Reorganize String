@@ -1,0 +1,29 @@
+#本题思路：
+1、 用counter记录string里每个char以及出现的频率 比如“aab” -> a:2, b1
+2、 用heap来排序 从频率的大到小: a:-2, b:-1
+3、 pop a一次，然后加进去result，接着把剩下的a:-1存到pCount和pKey，然后pop b一次，加进去result里面；接着把pCount和pKey压回heap，这样a和b就会错开，如果在a加进去result后，马上把剩下的a压回去，那这样下次pop出来的也会是a；用pCount和pKey先存起来，在b出来后再压回去
+4. 如果res的长度不等于原来的s的长度，则return “”
+class Solution(object):
+    def reorganizeString(self, s):
+        """
+        :type S: str
+        :rtype: str
+        """
+        heap = []
+        collection = collections.Counter(s)
+        for key, count in collection.items():
+            heapq.heappush(heap, (-count, key))
+        res = ""
+        pCount, pKey = 0, ""
+        while heap:
+            tempCount, tempKey = heapq.heappop(heap)
+            res += tempKey
+            if pCount < 0:
+                heapq.heappush(heap, (pCount, pKey))
+                
+            tempCount += 1
+            pCount, pKey = tempCount, tempKey
+        
+        if len(res) != len(s): return ""
+        return res
+            
