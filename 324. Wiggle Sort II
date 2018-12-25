@@ -1,0 +1,53 @@
+#本题思路：
+f = lambda i:(1+2*(i)) % (n|1):
+Accessing A(0) actually accesses nums[1].
+Accessing A(1) actually accesses nums[3].
+Accessing A(2) actually accesses nums[5].
+Accessing A(3) actually accesses nums[7].
+Accessing A(4) actually accesses nums[9].
+Accessing A(5) actually accesses nums[0].
+Accessing A(6) actually accesses nums[2].
+Accessing A(7) actually accesses nums[4].
+Accessing A(8) actually accesses nums[6].
+Accessing A(9) actually accesses nums[8].
+大于中位数的在左边，也就是一开始的1，3，5，7，9会被较大的数字填进去；小于中位数在右边，也就是0，2，4，6，8位置会被较小的数字填进去
+
+class Solution(object):
+    def wiggleSort(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """
+        if len(nums) == 1:
+            return
+        n = len(nums)
+        median = self.findKthLargest(nums, len(nums)/2)
+        left, index, right = 0, 0, n-1
+        f = lambda i:(1+2*(i)) % (n|1)
+        
+        while index <= right:
+            if nums[f(index)] > median:
+                nums[f(left)], nums[f(index)] = nums[f(index)], nums[f(left)]
+                left += 1
+                index += 1
+            elif nums[f(index)] < median:
+                nums[f(right)], nums[f(index)] = nums[f(index)], nums[f(right)]
+                right -= 1
+            else:
+                index += 1
+            
+
+        
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        heap = [float('-inf')] * k
+        heapq.heapify(heap)
+        for num in nums:
+            if num > heap[0]:
+                heapq.heappop(heap)
+                heapq.heappush(heap, num)
+        return heap[0]  
