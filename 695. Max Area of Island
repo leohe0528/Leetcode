@@ -1,5 +1,5 @@
 #本题思路：用dfs遍历，为什么想得到，额，因为求max area，只能每个格子看周围是否为1，是的话就加起来
-#细节：注意把遍历过为1的格子 让其变成0，用max方程来记录最大值即可
+#细节：注意把遍历过为1的格子 让其变成0，这个方法相当于图论的dfs把遍历过的node标记一下；用max方程来记录最大值即可
 
 class Solution(object):
     def maxAreaOfIsland(self, grid):
