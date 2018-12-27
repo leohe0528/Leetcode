@@ -1,0 +1,19 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def increasingBST(self, root, tail):
+        #例子 1.left = 2, 1.right = 3
+        #如果当前node是最底下 即为None，然后就返回tail 也就是none的parent node，这样res 就接上了parent node
+        #注意！！！记住接的不仅仅是val，而是node！！也就是说如果这个parent node left和right有东西，res也接上了！！！这也是为什么root.left = None
+        # res = 2， parent（tail）= 1
+        if not root: return tail
+        res = self.increasingBST(root.left, root)
+        root.left = None
+        #遍历完左边接着到右边，如果遍历到最右边，则连接2的parent node 即为1: 2->1->node（这里的node是原本root的left，返回后会紧接着root.left = None 把这个node给去掉: 2->1）
+        root.right = self.increasingBST(root.right, tail)
+        return res
