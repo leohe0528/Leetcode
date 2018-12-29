@@ -1,0 +1,26 @@
+class Solution(object):
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        dp = [0] + [float("inf")] * (amount)
+        for i in range(amount + 1):
+            for coin in coins:
+                if coin <= i:
+                    dp[i] = min(dp[i], dp[i - coin] + 1)
+        return dp[-1] if dp[-1] <= amount else -1
+
+#本题思路：如下        
+#         n = len(coins)
+#         # dp[i]表示amount=i需要的最少coin数
+#         dp = [float("inf")] * (amount+1)
+#         dp[0] = 0
+#         for i in range(amount+1):
+#             for j in range(n):
+#                 # 只有当硬币面额不大于要求面额数时，才能取该硬币
+#                 if coins[j] <= i:
+#                     dp[i] = min(dp[i], dp[i-coins[j]]+1)
+#         # 硬币数不会超过要求总面额数，如果超过，说明没有方案可凑到目标值
+#         return dp[amount] if dp[amount] <= amount else -1
