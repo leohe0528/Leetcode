@@ -1,0 +1,36 @@
+#问题本质是这个graph有没有cycle
+#1.构建一个directed graph
+#2.用dfs来遍历这个graph，看有没有环
+#3.注意这题需要visited有两个状态，一个是visiting（等于-1），另外是visited（等于1）
+#  当在visiting的时候，如果出现cycle，if visited[i] == -1: return False会被执行
+#  具体例子是1->0->2->4, 如果没有visiting，由于是从0开始，第一次recursion是走0->2->4，然后visited会记录0，2，4
+#  下一个循环是从1开始，则是1->0->2->4,由于visited已经登记了0，2，4，且没有区分开visiting和visited两种状态
+#  即使没有cycle，也会报错，所以我们需要visiting这个状态来查找当前node的dfs下有没有cycle
+#  当有了visiting这种状态，如果在visiting状态下遍历都没有cycle，则登记为1，当第二次循环1->0->2->4，0，2，4是
+#  被登记成1，也就是执行if visited[i] == 1: return True，会返回true
+class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        graph = [[] for _ in range(numCourses)]
+        visited = [0 for _ in range(numCourses)]
+        for x, y in prerequisites:
+            graph[x].append(y)
+        
+        def dfs(i):
+            if visited[i] == -1: return False
+            if visited[i] == 1: return True
+            visited[i] = -1
+            for j in graph[i]:
+                if not dfs(j):
+                    return False
+            visited[i] = 1
+            return True
+        
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+        return True
